@@ -51,13 +51,13 @@ install_recommended_packages () {
 }
 
 install_dotfiles () {
-  ln -s $DOTFILES_PATH/.profile $HOME
-  ln -s $DOTFILES_PATH/.bashrc $HOME
-  ln -s $DOTFILES_PATH/.config/nvim $HOME
-  ln -s $DOTFILES_PATH/.tmux.conf $HOME
-  ln -s $DOTFILES_PATH/.gitconfig $HOME
-  ln -s $DOTFILES_PATH/.git-completion.bash $HOME
-  ln -s $DOTFILES_PATH/.git-prompt.sh $HOME
+  ln -sb $DOTFILES_PATH/.profile $HOME
+  ln -sb $DOTFILES_PATH/.bashrc $HOME
+  ln -sb $DOTFILES_PATH/.config/nvim $HOME
+  ln -sb $DOTFILES_PATH/.tmux.conf $HOME
+  ln -sb $DOTFILES_PATH/.gitconfig $HOME
+  ln -sb $DOTFILES_PATH/.git-completion.bash $HOME
+  ln -sb $DOTFILES_PATH/.git-prompt.sh $HOME
 }
 
 install_pyenv () {
