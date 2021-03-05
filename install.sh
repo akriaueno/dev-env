@@ -24,7 +24,7 @@ ask_settings() {
 }
 
 install_requirements () {
- sudo apt-get install -y "$requirements";;
+ sudo apt-get install -y "$REQUIREMENTS";;
 }
 
 check_shell () {
