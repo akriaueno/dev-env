@@ -5,6 +5,27 @@ REPO_PATH=$HOME/.dev-env
 DOTFILES_PATH=$REPO_PATH/dotfiles
 NVIM_PATH=$REPO_PATH/.config
 PYTHON_VERSION=3.9.2
+REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
+RECOMMENDED="bash-completion tmux"
+
+install_recommended=0
+
+ask_settings() {
+  read -p "install $REQUIREMENTS ? (y/N): " yn
+  case "$yn" in
+    [yY]*) :;;
+        *) echo "abort"; exit 1;;
+  esac
+  read -p "install $RECOMMENDED ? (y/N): " yn
+  case "$yn" in
+    [yY]*) install_recommended=1;;
+        *) echo "not install recommended packages";;
+  esac
+}
+
+install_requirements () {
+ sudo apt-get install -y "$requirements";;
+}
 
 check_shell () {
   ppid=$(ps -o ppid -p $$ | tail -n 1)
@@ -14,23 +35,10 @@ check_shell () {
   }'
 }
 
-install_recommended_packages () {
-  packages="bash-completion tmux"
-  read -p "install $packages ? (y/N): " yn
-  case "$yn" in
-    [yY]*) sudo apt-get install "$packages";;
-    *) echo "not installed recommended packages";;
-  esac
-}
-
-
-check_requirements () {
-  requirements="git neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
-  read -p "install $requirements ? (y/N): " yn
-  case "$yn" in
-    [yY]*) sudo apt-get install "$requirements";;
-    *) echo "abort"; exit 1;;
-  esac
+install_recommended () {
+  if [ "$install_recommended" = 1]; then
+    sudo apt-get install -y "$RECOMMENDED"
+  fi
 }
 
 get_repo () {
@@ -51,6 +59,7 @@ install_dotfiles () {
   ln -sb $DOTFILES_PATH/.gitconfig $HOME
   ln -sb $DOTFILES_PATH/.git-completion.bash $HOME
   ln -sb $DOTFILES_PATH/.git-prompt.sh $HOME
+  . $HOME/.profile
 }
 
 install_pyenv () {
@@ -63,7 +72,6 @@ install_pyenv () {
     esac
   fi
   curl https://pyenv.run | bash &&
-  . $HOME/.profile &&
   pyenv install $PYTHON_VERSION
 }
 
@@ -83,13 +91,14 @@ fi
 set -x
 pwd=$(pwd)
 cd $HOME
-sudo apt-get update          || exit 1 &&
-install_recommended_packages || exit 1 &&
-check_requirements           || exit 1 &&
-get_repo                     || exit 1 &&
-install_dotfiles             || exit 1 &&
-install_pyenv                || exit 1 &&
-mk_nvim_env                  || exit 1 &&
+ask_settings         || exit 1 &&
+sudo apt-get update  || exit 1 &&
+install_recommended  || exit 1 &&
+install_requirements || exit 1 &&
+get_repo             || exit 1 &&
+install_dotfiles     || exit 1 &&
+install_pyenv        || exit 1 &&
+mk_nvim_env          || exit 1 &&
 exec -l bash
 cd $pwd
 set +x
