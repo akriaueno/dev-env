@@ -20,7 +20,7 @@ check_requirements () {
   for v in ${requirements[@]}; do
     type $v > /dev/null 2>&1 || unmet+=" $v"
   done
-  if [ "$unmet" != '']; then
+  if [ "$unmet" = '' ]; then
     return
   fi
   echo "not installed $unmet"
