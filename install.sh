@@ -77,11 +77,12 @@ install_pyenv () {
 
 mk_nvim_env () {
   PYTHON3=$PYENV_ROOT/versions/$PYTHON_VERSION/bin/python
-  PIP=$PYENV_ROOT/versions/$PYTHON_VERSION/bin/pip
+  PIP=$NVIM_PATH/python3/venv/bin/pip
   mkdir -p $NVIM_PATH/python3
   cd $NVIM_PATH/python3 &&
   $PYTHON3 -m venv venv &&
-  $PIP install -r requirements.txt
+  $PIP install -r requirements.txt &&
+  nvim -e +":UpdateRemotePlugins" +:q
   cd -
 }
 
