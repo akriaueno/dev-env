@@ -6,8 +6,8 @@ DOTFILES_PATH=$REPO_PATH/dotfiles
 NVIM_PATH=$HOME/.config/nvim
 PYENV_ROOT=$HOME/.pyenv
 PYTHON_VERSION=3.9.2
-REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev       \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev      \
+REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
 libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
 RECOMMENDED="bash-completion tmux"
 
@@ -15,33 +15,25 @@ install_recommended=0
 rm_pyenvdir=0
 
 ask_settings() {
-  read -p "install $REQUIREMENTS ? (y/N): " yn
+  read -n1 -p "install $REQUIREMENTS ? (y/N): " yn
   case "$yn" in
     [yY]*) :;;
         *) echo "abort"; exit 1;;
   esac
   
-  read -p "install $RECOMMENDED ? (y/N): " yn
+  read -n1 -p "install $RECOMMENDED ? (y/N): " yn
   case "$yn" in
     [yY]*) install_recommended=1;;
         *) echo "not install recommended packages";;
   esac
 
   if [ -d $PYENV_ROOT ]; then
-    read -p "remove $PYENV_ROOT ? (y/N): " yn
+    read -n1 -p "remove $PYENV_ROOT ? (y/N): " yn
     case "$yn" in
       [yY]*) rm_pyenvdir=1;;
       *) echo "not remove $PYENV_ROOT";;
     esac
   fi
-}
-
-check_shell () {
-  ppid=$(ps -o ppid -p $$ | tail -n 1)
-  ps -p $ppid | tail -n 1 | awk '
-  match($0,/bash|zsh|fish|tcsh/) {
-    print substr($0,RSTART,RLENGTH)
-  }'
 }
 
 install_requirements () {
@@ -93,14 +85,8 @@ mk_nvim_env () {
   cd -
 }
 
-shell=$(check_shell)
-if [ "$shell" != 'bash' ]; then
-  echo "run bash"
-  exit 1
-fi
-
 set -x
-pwd=$(pwd)
+predir=$(pwd)
 cd "${HOME}" || exit 1
 ask_settings         || exit 1
 sudo apt-get update  || exit 1
@@ -110,6 +96,5 @@ get_repo             || exit 1
 install_dotfiles     || exit 1
 install_pyenv        || exit 1
 mk_nvim_env          || exit 1
-exec -l bash
-cd $pwd || exit 1
+cd $predir || exit 1
 set +x
