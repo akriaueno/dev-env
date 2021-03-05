@@ -1,0 +1,8 @@
+[user]
+	name = akriaueno
+	email = akiraueno@outlook.com
+	signingkey = 12E75C4E0E999053
+[core]
+	editor = vim
+[commit]
+	gpgsign = true

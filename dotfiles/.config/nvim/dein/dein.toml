@@ -1,0 +1,58 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+on_ft = 'python'
+
+# nim
+repo='alaviss/nim.nvim'
+on_ft='nim'
+hook_add= '''
+au User asyncomplete_setup call asyncomplete#register_source({
+    \ 'name': 'nim',
+    \ 'whitelist': ['nim'],
+    \ 'completor': {opt, ctx -> nim#suggest#sug#GetAllCandidates({start, candidates -> asyncomplete#complete(opt['name'], ctx, start, candidates)})}
+    \ })
+'''
+
+# rust
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = 'rust'
+hook_add = '''
+let g:rustfmt_autosave = 1
+'''
+
+[[plugins]]
+repo = 'Townk/vim-autoclose'
+
+[[plugins]]
+repo = 'tomasr/molokai'
+
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+
+[[plugins]]
+repo = 'ConradIrwin/vim-bracketed-paste'
+
+[[plugins]]
+repo = 'mattesgroeger/vim-bookmarks'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+## lsp
+# [[plugins]]
+# repo = 'prabirshrestha/vim-lsp'
+# 
+# [[plugins] repo = 'mattn/vim-lsp-settings'
+
+[[plugins]]
+repo = 'dense-analysis/ale'
