@@ -18,7 +18,7 @@ install_recommended_packages () {
   packages="bash-completion tmux"
   read -p "install $packages ? (y/N): " yn
   case "$yn" in
-    [yY]*) set -x; sudo apt-get install $packages; set +x;;
+    [yY]*) sudo apt-get install $packages;;
     *) echo "not installed recommended packages";;
   esac
 }
@@ -28,7 +28,7 @@ check_requirements () {
   requirements="git neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
   read -p "install $requirements ? (y/N): " yn
   case "$yn" in
-    [yY]*) set -x; sudo apt-get install "$requirements"; set +x;;
+    [yY]*) sudo apt-get install "$requirements";;
     *) echo "abort"; exit 1;;
   esac
 }
@@ -80,6 +80,7 @@ if [ "$shell" != 'bash' ]; then
   exit 1
 fi
 
+set -x
 pwd=$(pwd)
 cd $HOME
 install_recommended_packages &&
@@ -90,3 +91,4 @@ install_pyenv &&
 mk_nvim_env &&
 exec -l bash
 cd $pwd
+set +x
