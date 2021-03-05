@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 shell_checker () {
   ppid=$(ps -o ppid -p $$ | tail -n 1)
