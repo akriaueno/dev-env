@@ -33,7 +33,7 @@ liblzma-dev python-openssl
 "
   read -p "install $requirements ? (y/N): " yn
   case "$yn" in
-    [yY]*) set -x; sudo apt-get install $($requirements; set +x;;
+    [yY]*) set -x; sudo apt-get install "$requirements"; set +x;;
     *) echo "abort"; exit 1;;
   esac
 }
