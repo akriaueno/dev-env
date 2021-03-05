@@ -82,6 +82,7 @@ install_pyenv () {
 }
 
 mk_nvim_env () {
+  mkdir -p $NVIM_PATH/python3
   cd $NVIM_PATH/python3
   python -m venv venv
   pip isntall -r requirements.txt
