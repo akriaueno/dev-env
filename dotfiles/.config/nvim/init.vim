@@ -31,8 +31,7 @@ endif
 filetype plugin indent on
 syntax enable
 
-" let g:python_host_prog = $HOME . '/nvim/venv-py2/bin/python'
-let g:python3_host_prog = $HOME . '/nvim/venv/bin/python'
+let g:python3_host_prog = $HOME . '/.config/nvim/python3/venv/bin/python'
 
 set ttimeoutlen=10
 
