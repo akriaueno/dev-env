@@ -6,7 +6,7 @@ DOTFILES_PATH=$REPO_PATH/dotfiles
 NVIM_PATH=$REPO_PATH/.config
 PYTHON_VERSION=3.9.2
 
-shell_checker () {
+check_shell () {
   ppid=$(ps -o ppid -p $$ | tail -n 1)
   ps -p $ppid | tail -n 1 | awk '
   match($0,/bash|zsh|fish|tcsh/) {
@@ -14,8 +14,18 @@ shell_checker () {
   }'
 }
 
+install_recommended_packages () {
+  packages="bash-completion neovim tmux build-essential"
+  read -p "install $packages ? (y/N): " yn
+  case "$yn" in
+    [yY]*) set -x; sudo apt-get install $packages; set +x;;
+    *) echo "not installed recommended packages";;
+  esac
+}
+
+
 check_requirements () {
-  requirements=(git curl)
+  requirements=(git curl gcc)
   unmet=''
   for v in ${requirements[@]}; do
     type $v > /dev/null 2>&1 || unmet+=" $v"
@@ -39,15 +49,6 @@ get_repo () {
   else
     git clone https://github.com/akriaueno/dev-env.git $REPO_PATH
   fi
-}
-
-install_recommended_packages () {
-  packages="bash-completion neovim tmux"
-  read -p "install $packages ? (y/N): " yn
-  case "$yn" in
-    [yY]*) set -x; sudo apt-get install $packages; set +x;;
-    *) echo "not installed recommended packages";;
-  esac
 }
 
 install_dotfiles () {
@@ -81,7 +82,7 @@ mk_nvim_env () {
   cd -
 }
 
-shell=$(shell_checker)
+shell=$(check_shell)
 if [ "$shell" != 'bash' ]; then
   echo "run bash"
   exit 1
@@ -89,8 +90,8 @@ fi
 
 pwd=$(pwd)
 cd $HOME
-check_requirements &&
 install_recommended_packages &&
+check_requirements &&
 get_repo &&
 install_dotfiles &&
 install_pyenv &&
