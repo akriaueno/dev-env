@@ -78,7 +78,7 @@ install_pyenv () {
     rm -rf $PYENV_ROOT
   fi
   curl https://pyenv.run | bash
-  . $HOME/.profile
+  . $HOME/.bashrc
   pyenv install $PYTHON_VERSION
 }
 
@@ -98,14 +98,14 @@ fi
 set -x
 pwd=$(pwd)
 cd $HOME
-ask_settings         || exit 1 &&
-sudo apt-get update  || exit 1 &&
-install_recommended  || exit 1 &&
-install_requirements || exit 1 &&
-get_repo             || exit 1 &&
-install_dotfiles     || exit 1 &&
-install_pyenv        || exit 1 &&
-mk_nvim_env          || exit 1 &&
+ask_settings         || exit 1
+sudo apt-get update  || exit 1
+install_recommended  || exit 1
+install_requirements || exit 1
+get_repo             || exit 1
+install_dotfiles     || exit 1
+install_pyenv        || exit 1
+mk_nvim_env          || exit 1
 exec -l bash
 cd $pwd
 set +x
