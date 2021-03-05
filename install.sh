@@ -42,7 +42,7 @@ get_repo () {
 }
 
 install_recommended_packages () {
-  packages="bash-completion"
+  packages="bash-completion neovim"
   read -p "install $packages ? (y/N): " yn
   case "$yn" in
     [yY]*) set -x; sudo apt-get install $packages; set +x;;
