@@ -47,7 +47,7 @@ check_shell () {
 }
 
 install_recommended () {
-  if [ "$install_recommended" = 1]; then
+  if [ "$install_recommended" = 1 ]; then
     sudo apt-get install -y "$RECOMMENDED"
   fi
 }
@@ -74,7 +74,7 @@ install_dotfiles () {
 }
 
 install_pyenv () {
-  if [ "$install_recommended" = 1]; then
+  if [ "$install_recommended" = 1 ]; then
     rm -rf $PYENV_ROOT
   fi
   curl https://pyenv.run | bash
