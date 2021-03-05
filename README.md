@@ -1,5 +1,6 @@
 # dev-env
 [![CI](https://github.com/akriaueno/dev-env/actions/workflows/ci.yml/badge.svg)](https://github.com/akriaueno/dev-env/actions/workflows/ci.yml)
+[![BCH compliance](https://bettercodehub.com/edge/badge/akriaueno/dev-env?branch=main)](https://bettercodehub.com/)
 
 development environment
 
