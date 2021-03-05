@@ -3,5 +3,5 @@ development environment
 
 ## install
 ``` bash
-curl https://raw.githubusercontent.com/akriaueno/dev-env/main/install.sh | bash
+bash <(curl -s https://raw.githubusercontent.com/akriaueno/dev-env/main/install.sh)
 ```
