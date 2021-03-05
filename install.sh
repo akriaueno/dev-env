@@ -18,7 +18,7 @@ install_recommended_packages () {
   packages="bash-completion tmux"
   read -p "install $packages ? (y/N): " yn
   case "$yn" in
-    [yY]*) sudo apt-get install $packages;;
+    [yY]*) sudo apt-get install "$packages";;
     *) echo "not installed recommended packages";;
   esac
 }
@@ -83,6 +83,7 @@ fi
 set -x
 pwd=$(pwd)
 cd $HOME
+sudo apt-get update &&
 install_recommended_packages &&
 check_requirements &&
 get_repo &&
