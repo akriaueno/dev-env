@@ -82,10 +82,12 @@ install_pyenv () {
 }
 
 mk_nvim_env () {
+  PYTHON3=$PYENV_ROOT/versions/$PYTHON_VERSION/bin/python
+  PIP=$PYENV_ROOT/versions/$PYTHON_VERSION/bin/pip
   mkdir -p $NVIM_PATH/python3
   cd $NVIM_PATH/python3
-  python -m venv venv
-  pip isntall -r requirements.txt
+  $PYTHON -m venv venv
+  $PIP install -r requirements.txt
   cd -
 }
 
