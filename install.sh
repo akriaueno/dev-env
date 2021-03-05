@@ -4,11 +4,13 @@
 REPO_PATH=$HOME/.dev-env
 DOTFILES_PATH=$REPO_PATH/dotfiles
 NVIM_PATH=$REPO_PATH/.config
+PYENV_ROOT="$HOME/.pyenv"
 PYTHON_VERSION=3.9.2
 REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
 RECOMMENDED="bash-completion tmux"
 
 install_recommended=0
+rm_pyenvdir=0
 
 ask_settings() {
   read -p "install $REQUIREMENTS ? (y/N): " yn
@@ -16,15 +18,24 @@ ask_settings() {
     [yY]*) :;;
         *) echo "abort"; exit 1;;
   esac
+  
   read -p "install $RECOMMENDED ? (y/N): " yn
   case "$yn" in
     [yY]*) install_recommended=1;;
         *) echo "not install recommended packages";;
   esac
+
+  if [ -d $PYENV_ROOT ]; then
+    read -p "remove $PYENV_ROOT ? (y/N): " yn
+    case "$yn" in
+      [yY]*) rm_pyenvdir=1;;
+      *) echo "not remove $PYENV_ROOT";;
+    esac
+  fi
 }
 
 install_requirements () {
- sudo apt-get install -y "$REQUIREMENTS";;
+ sudo apt-get install -y "$REQUIREMENTS";
 }
 
 check_shell () {
@@ -63,21 +74,17 @@ install_dotfiles () {
 }
 
 install_pyenv () {
-  PYENV_ROOT="$HOME/.pyenv"
-  if [ -d $PYENV_ROOT ]; then
-    read -p "remove $PYENV_ROOT ? (y/N): " yn
-    case "$yn" in
-      [yY]*) rm -rf $PYENV_ROOT;;
-      *) echo "not remove $PYENV_ROOT";;
-    esac
+  if [ "$install_recommended" = 1]; then
+    rm -rf $PYENV_ROOT
   fi
-  curl https://pyenv.run | bash &&
+  curl https://pyenv.run | bash
+  . $HOME/.profile
   pyenv install $PYTHON_VERSION
 }
 
 mk_nvim_env () {
   cd $NVIM_PATH/python3
-  python -m venv venv &&
+  python -m venv venv
   pip isntall -r requirements.txt
   cd -
 }
