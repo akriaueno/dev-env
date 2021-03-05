@@ -9,6 +9,6 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER $login_user
 WORKDIR /home/$login_user
 COPY --chown=$login_user:$login_user install.sh .
-RUN ls -al
 RUN echo "yyy" | ./install.sh
+RUN rm ./install.sh
 CMD bash -login
