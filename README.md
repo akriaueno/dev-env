@@ -1,4 +1,6 @@
 # dev-env
+[![CI](https://github.com/akriaueno/dev-env/actions/workflows/ci.yml/badge.svg)](https://github.com/akriaueno/dev-env/actions/workflows/ci.yml)
+
 development environment
 
 ## install
