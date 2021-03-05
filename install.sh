@@ -62,6 +62,7 @@ install_dotfiles () {
 
 install_pyenv () {
   curl https://pyenv.run | bash &&
+  exec -l bash &&
   pyenv install $PYTHON_VERSION
 }
 
