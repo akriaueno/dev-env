@@ -35,7 +35,7 @@ ask_settings() {
 }
 
 install_requirements () {
- sudo apt-get install -y "$REQUIREMENTS";
+ sudo apt-get install -y $REQUIREMENTS;
 }
 
 check_shell () {
@@ -48,7 +48,7 @@ check_shell () {
 
 install_recommended () {
   if [ "$install_recommended" = 1 ]; then
-    sudo apt-get install -y "$RECOMMENDED"
+    sudo apt-get install -y $RECOMMENDED
   fi
 }
 
