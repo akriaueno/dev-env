@@ -25,7 +25,7 @@ install_recommended_packages () {
 
 
 check_requirements () {
-  requirements=(git curl gcc)
+  requirements=(git curl gcc make)
   unmet=''
   for v in ${requirements[@]}; do
     type $v > /dev/null 2>&1 || unmet+=" $v"
