@@ -73,7 +73,6 @@ pwd=$(pwd)
 cd $HOME
 check_requirements &&
 get_repo &&
-get_dotfiles &&
 install_dotfiles &&
 install_pyenv &&
 mk_nvim_env &&
