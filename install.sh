@@ -61,8 +61,16 @@ install_dotfiles () {
 }
 
 install_pyenv () {
+  PYENV_ROOT="$HOME/.pyenv"
+  if [ -d $PYENV_ROOT ]; then
+    read -p "remove $PYENV_ROOT ? (y/N): " yn
+    case "$yn" in
+      [yY]*) rm -rf $PYENV_ROOT;;
+      *) echo "not remove $PYENV_ROOT";;
+    esac
+  fi
   curl https://pyenv.run | bash &&
-  exec -l bash &&
+  . $HOME/.profile &&
   pyenv install $PYTHON_VERSION
 }
 
