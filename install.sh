@@ -37,7 +37,7 @@ get_repo () {
     git pull
     cd -
   else
-    git clone git@github.com:akriaueno/dev-env.git $REPO_PATH
+    git clone https://github.com/akriaueno/dev-env.git $REPO_PATH
   fi
 }
 
