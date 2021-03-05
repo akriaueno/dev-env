@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -u
 # expected OS is debian or ubuntu
 
 REPO_PATH=$HOME/.dev-env
@@ -83,13 +83,13 @@ fi
 set -x
 pwd=$(pwd)
 cd $HOME
-sudo apt-get update &&
-install_recommended_packages &&
-check_requirements &&
-get_repo &&
-install_dotfiles &&
-install_pyenv &&
-mk_nvim_env &&
+sudo apt-get update          || exit 1 &&
+install_recommended_packages || exit 1 &&
+check_requirements           || exit 1 &&
+get_repo                     || exit 1 &&
+install_dotfiles             || exit 1 &&
+install_pyenv                || exit 1 &&
+mk_nvim_env                  || exit 1 &&
 exec -l bash
 cd $pwd
 set +x
