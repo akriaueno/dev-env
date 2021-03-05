@@ -78,8 +78,7 @@ install_pyenv () {
     rm -rf $PYENV_ROOT
   fi
   curl https://pyenv.run | bash
-  . $HOME/.bashrc
-  pyenv install $PYTHON_VERSION
+  $PYENV_ROOT/bin/pyenv install $PYTHON_VERSION
 }
 
 mk_nvim_env () {
