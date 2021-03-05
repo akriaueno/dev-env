@@ -15,7 +15,7 @@ check_shell () {
 }
 
 install_recommended_packages () {
-  packages="bash-completion neovim tmux build-essential"
+  packages="bash-completion tmux"
   read -p "install $packages ? (y/N): " yn
   case "$yn" in
     [yY]*) set -x; sudo apt-get install $packages; set +x;;
@@ -25,16 +25,10 @@ install_recommended_packages () {
 
 
 check_requirements () {
-  requirements=(git curl gcc make)
-  unmet=''
-  for v in ${requirements[@]}; do
-    type $v > /dev/null 2>&1 || unmet+=" $v"
-  done
-  if [ "$unmet" = '' ]; then
-    return
-  fi
-  echo "not installed $unmet"
-  read -p "install $unmet ? (y/N): " yn
+  requirements="git curl neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev \
+                libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+                xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
+  read -p "install $requirements ? (y/N): " yn
   case "$yn" in
     [yY]*) set -x; sudo apt-get install $unmet; set +x;;
     *) echo "abort"; exit 1;;
