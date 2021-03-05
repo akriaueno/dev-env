@@ -14,5 +14,5 @@ bash <(curl -s https://raw.githubusercontent.com/akriaueno/dev-env/main/install.
 
 ### no intaractive
 ``` bash
-yes | bash <(curl -sL https://git.io/akriaueno-install.sh)
+echo "yyy" | bash <(curl -sL https://git.io/akriaueno-install.sh)
 ```

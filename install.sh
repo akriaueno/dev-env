@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -u
+#!/usr/bin/env bash
 # expected OS is debian or ubuntu
 
 REPO_PATH=$HOME/.dev-env
@@ -6,7 +6,9 @@ DOTFILES_PATH=$REPO_PATH/dotfiles
 NVIM_PATH=$HOME/.config/nvim
 PYENV_ROOT=$HOME/.pyenv
 PYTHON_VERSION=3.9.2
-REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
+REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev       \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev      \
+libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
 RECOMMENDED="bash-completion tmux"
 
 install_recommended=0
@@ -34,16 +36,16 @@ ask_settings() {
   fi
 }
 
-install_requirements () {
- sudo apt-get install -y $REQUIREMENTS;
-}
-
 check_shell () {
   ppid=$(ps -o ppid -p $$ | tail -n 1)
   ps -p $ppid | tail -n 1 | awk '
   match($0,/bash|zsh|fish|tcsh/) {
     print substr($0,RSTART,RLENGTH)
   }'
+}
+
+install_requirements () {
+ sudo apt-get install -y $REQUIREMENTS
 }
 
 install_recommended () {
@@ -54,22 +56,22 @@ install_recommended () {
 
 get_repo () {
   if [ -d "$REPO_PATH" ]; then
-    cd $REPO_PATH
+    cd $REPO_PATH || exit 1
     git pull
-    cd -
+    cd - || exit 1
   else
     git clone https://github.com/akriaueno/dev-env.git $REPO_PATH
   fi
 }
 
 install_dotfiles () {
-  ln -sb $DOTFILES_PATH/.profile $HOME
-  ln -sb $DOTFILES_PATH/.bashrc $HOME
-  ln -sb $DOTFILES_PATH/.config $HOME
-  ln -sb $DOTFILES_PATH/.tmux.conf $HOME
-  ln -sb $DOTFILES_PATH/.gitconfig $HOME
+  ln -sb $DOTFILES_PATH/.profile             $HOME
+  ln -sb $DOTFILES_PATH/.bashrc              $HOME
+  ln -sb $DOTFILES_PATH/.config              $HOME
+  ln -sb $DOTFILES_PATH/.tmux.conf           $HOME
+  ln -sb $DOTFILES_PATH/.gitconfig           $HOME
   ln -sb $DOTFILES_PATH/.git-completion.bash $HOME
-  ln -sb $DOTFILES_PATH/.git-prompt.sh $HOME
+  ln -sb $DOTFILES_PATH/.git-prompt.sh       $HOME
   . $HOME/.profile
 }
 
@@ -85,8 +87,8 @@ mk_nvim_env () {
   PYTHON3=$PYENV_ROOT/versions/$PYTHON_VERSION/bin/python
   PIP=$PYENV_ROOT/versions/$PYTHON_VERSION/bin/pip
   mkdir -p $NVIM_PATH/python3
-  cd $NVIM_PATH/python3
-  $PYTHON -m venv venv
+  cd $NVIM_PATH/python3 &&
+  $PYTHON3 -m venv venv &&
   $PIP install -r requirements.txt
   cd -
 }
@@ -99,7 +101,7 @@ fi
 
 set -x
 pwd=$(pwd)
-cd $HOME
+cd "${HOME}" || exit 1
 ask_settings         || exit 1
 sudo apt-get update  || exit 1
 install_recommended  || exit 1
@@ -109,5 +111,5 @@ install_dotfiles     || exit 1
 install_pyenv        || exit 1
 mk_nvim_env          || exit 1
 exec -l bash
-cd $pwd
+cd $pwd || exit 1
 set +x
