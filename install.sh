@@ -3,8 +3,8 @@
 
 REPO_PATH=$HOME/.dev-env
 DOTFILES_PATH=$REPO_PATH/dotfiles
-NVIM_PATH=$REPO_PATH/.config/nvim
-PYENV_ROOT="$HOME/.pyenv"
+NVIM_PATH=$HOME/.config/nvim
+PYENV_ROOT=$HOME/.pyenv
 PYTHON_VERSION=3.9.2
 REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
 RECOMMENDED="bash-completion tmux"
@@ -65,7 +65,7 @@ get_repo () {
 install_dotfiles () {
   ln -sb $DOTFILES_PATH/.profile $HOME
   ln -sb $DOTFILES_PATH/.bashrc $HOME
-  ln -sb $DOTFILES_PATH/.config/nvim $HOME
+  ln -sb $DOTFILES_PATH/.config $HOME
   ln -sb $DOTFILES_PATH/.tmux.conf $HOME
   ln -sb $DOTFILES_PATH/.gitconfig $HOME
   ln -sb $DOTFILES_PATH/.git-completion.bash $HOME
