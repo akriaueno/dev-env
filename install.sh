@@ -20,7 +20,7 @@ check_requirements () {
   for v in ${requirements[@]}; do
     type $v > /dev/null 2>&1 || unmet+=" $v"
   done
-  if [ $unmet != '']; then
+  if [" $unmet" != '']; then
     return
   fi
   echo "not installed $unmet"
@@ -32,7 +32,7 @@ check_requirements () {
 }
 
 get_repo () {
-  if [ -d $REPO_PATH ]; then
+  if [ -d "$REPO_PATH" ]; then
     cd $REPO_PATH
     git pull
     cd -
@@ -64,7 +64,7 @@ mk_nvim_env () {
 }
 
 shell=$(shell_checker)
-if [ $shell != 'bash' ]; then
+if [ "$shell" != 'bash' ]; then
   echo "run bash"
   exit 1
 fi
