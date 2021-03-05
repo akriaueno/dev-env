@@ -15,7 +15,7 @@ shell_checker () {
 }
 
 check_requirements () {
-  requirements=(git curl bash-completion)
+  requirements=(git curl)
   unmet=''
   for v in ${requirements[@]}; do
     type $v > /dev/null 2>&1 || unmet+=" $v"
@@ -24,9 +24,9 @@ check_requirements () {
     return
   fi
   echo "not installed $unmet"
-  read -p "install $unmet? (y/N): " yn
+  read -p "install $unmet ? (y/N): " yn
   case "$yn" in
-    [yY]*) set -x; sudo apt install $unmet; set +x;;
+    [yY]*) set -x; sudo apt-get install $unmet; set +x;;
     *) echo "abort"; exit 1;;
   esac
 }
@@ -39,6 +39,15 @@ get_repo () {
   else
     git clone https://github.com/akriaueno/dev-env.git $REPO_PATH
   fi
+}
+
+install_recommended_packages () {
+  packages="bash-completion"
+  read -p "install $packages ? (y/N): " yn
+  case "$yn" in
+    [yY]*) set -x; sudo apt-get install $packages; set +x;;
+    *) echo "not installed recommended packages";;
+  esac
 }
 
 install_dotfiles () {
@@ -72,6 +81,7 @@ fi
 pwd=$(pwd)
 cd $HOME
 check_requirements &&
+install_recommended_packages &&
 get_repo &&
 install_dotfiles &&
 install_pyenv &&
