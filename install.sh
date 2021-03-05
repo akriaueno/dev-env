@@ -25,10 +25,12 @@ install_recommended_packages () {
 
 
 check_requirements () {
-  requirements="git neovim gcc make build-essential libssl-dev zlib1g-dev"    \
-	       "libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm"     \
-	       "libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev"  \
-	       "liblzma-dev python-openssl"
+  requirements="
+git neovim gcc make build-essential libssl-dev zlib1g-dev
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev
+liblzma-dev python-openssl
+"
   read -p "install $requirements ? (y/N): " yn
   case "$yn" in
     [yY]*) set -x; sudo apt-get install $($requirements; set +x;;
