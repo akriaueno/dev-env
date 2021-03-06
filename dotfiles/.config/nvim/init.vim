@@ -98,9 +98,6 @@ inoremap <C-l> <Right>
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
 
-" vim-lsp
-au BufWritePre *.ts :LspDocumentFormat
-
 "タブ、空白、改行の可視化
 set list
 " set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
@@ -136,18 +133,20 @@ colorscheme molokai
 let g:ale_sign_column_always = 1
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-\   'python': ['flake8'],
-\   'typescript': ['eslint'],
-\   'json': ['eslint'],
-\   'go': ['gometalinter'],
 \   'c': ['gcc'],
+\   'go': ['gometalinter'],
+\   'json': ['eslint'],
+\   'python': ['flake8'],
+\   'rust': ['rls'],
+\   'typescript': ['eslint'],
 \}
 let g:ale_fixers = {
-\   'python': ['black', 'isort'],
-\   'typescript': ['prettier'],
-\   'json': ['eslint'],
 \   'go':['gofmt'],
+\   'json': ['eslint'],
+\   'python': ['black', 'isort'],
 \   'r': ['styler'],
+\   'rust': ['rustfmt'],
+\   'typescript': ['prettier'],
 \}
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)

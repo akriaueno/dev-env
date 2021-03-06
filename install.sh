@@ -59,6 +59,7 @@ get_repo () {
 install_dotfiles () {
   ln -sb $DOTFILES_PATH/.profile             $HOME
   ln -sb $DOTFILES_PATH/.bashrc              $HOME
+  ln -sb $DOTFILES_PATH/.bash_aliases        $HOME
   ln -sb $DOTFILES_PATH/.config              $HOME
   ln -sb $DOTFILES_PATH/.tmux.conf           $HOME
   ln -sb $DOTFILES_PATH/.gitconfig           $HOME
@@ -68,11 +69,15 @@ install_dotfiles () {
 }
 
 install_pyenv () {
-  if [ "$install_recommended" = 1 ]; then
+  if [ "$rm_pyenvdir" = 1 ]; then
     rm -rf $PYENV_ROOT
   fi
   curl https://pyenv.run | bash
   $PYENV_ROOT/bin/pyenv install $PYTHON_VERSION
+}
+
+install_cargo () {
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 }
 
 mk_nvim_env () {
@@ -88,14 +93,28 @@ mk_nvim_env () {
 
 set -x
 predir=$(pwd)
-cd "${HOME}" || exit 1
+cd "${HOME}"         || exit 1
 ask_settings         || exit 1
 sudo apt-get update  || exit 1
 install_recommended  || exit 1
 install_requirements || exit 1
 get_repo             || exit 1
 install_dotfiles     || exit 1
-install_pyenv        || exit 1
-mk_nvim_env          || exit 1
-cd $predir || exit 1
+
+prll_pids=()
+(install_pyenv && mk_nvim_env || exit 1)&
+prll_pids+=($!)
+(install_cargo                || exit 1)&
+prll_pids+=($!)
+
+for pid in ${prll_pids[@]}; do
+  wait $pid; stat=$?
+  if [ $stat -ne 0 ]; then
+    kill ${prll_pids[@]} 2> /dev/null
+    echo "error occured"
+    exit $stat
+  fi
+done
+
+cd $predir           || exit 1
 set +x
