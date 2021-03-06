@@ -9,7 +9,7 @@ PYTHON_VERSION=3.9.2
 REQUIREMENTS="git neovim gcc make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
 libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl"
-RECOMMENDED="bash-completion tmux"
+RECOMMENDED="bash-completion tmux unar"
 
 install_recommended=0
 rm_pyenvdir=0
