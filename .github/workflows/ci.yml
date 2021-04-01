@@ -32,5 +32,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          repository: akriaueno/dev-env/dev-env
+          repository: akriaueno/dev-env
           tag_with_ref: true
