@@ -22,6 +22,5 @@ echo "yyy" | bash <(curl -sL https://git.io/akriaueno-install.sh)
 
 ### docker
 ```
-echo "<github access token>" | docker login https://docker.pkg.github.com -u <github username> --password-stdin
-docker run -it --rm docker.pkg.github.com/akriaueno/dev-env/dev-env:main
+docker run -it --rm ghcr.io/akriaueno/dev-env:main
 ```
