@@ -22,5 +22,5 @@ echo "yyy" | bash <(curl -sL https://git.io/akriaueno-install.sh)
 
 ### docker
 ```
-docker run -it --rm ghcr.io/akriaueno/dev-env:main
+docker run -v $HOME/docker/project:/home/debian/project -it --rm ghcr.io/akriaueno/dev-env:main
 ```
