@@ -4,7 +4,12 @@
 
 development environment
 
-## install
+## Docker
+```
+docker run -v $HOME/docker/project:/home/debian/project -it --rm ghcr.io/akriaueno/dev-env:main
+```
+
+## Debian
 ### short version
 ``` bash
 bash <(curl -sL https://git.io/akriaueno-install.sh)
@@ -18,9 +23,4 @@ bash <(curl -s https://raw.githubusercontent.com/akriaueno/dev-env/main/install.
 ### no intaractive
 ``` bash
 echo "yyy" | bash <(curl -sL https://git.io/akriaueno-install.sh)
-```
-
-### docker
-```
-docker run -v $HOME/docker/project:/home/debian/project -it --rm ghcr.io/akriaueno/dev-env:main
 ```
